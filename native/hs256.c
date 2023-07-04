@@ -57,9 +57,9 @@ napi_value HS256(napi_env env, napi_callback_info info) {
     hmac_request* req = (hmac_request*)malloc(sizeof(hmac_request));
 
     status = napi_get_value_string_utf8(env, argv[0], NULL, 0, &(req->message_len));
-    if (status != napi_ok) {
+    if (status != napi_ok || req->message_len > 256) {
         free(req);
-        napi_throw_error(env, NULL, "Failed to get message length");
+        napi_throw_error(env, NULL, "Message is too long");
         return NULL;
     }
 
@@ -73,10 +73,10 @@ napi_value HS256(napi_env env, napi_callback_info info) {
     }
 
     status = napi_get_value_string_utf8(env, argv[1], NULL, 0, &(req->key_len));
-    if (status != napi_ok) {
+    if (status != napi_ok || req->key_len < 1 || req->key_len > 256) {
         free(req->message);
         free(req);
-        napi_throw_error(env, NULL, "Failed to get key length");
+        napi_throw_error(env, NULL, "Key is invalid");
         return NULL;
     }
 
