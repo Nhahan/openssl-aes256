@@ -26,7 +26,7 @@ void complete_hmac(napi_env env, napi_status status, void* data) {
     if (status == napi_ok) {
         if (req->status == 0) {
             napi_value result;
-            napi_create_external_arraybuffer(env, req->digest_len, req->digest, free, NULL, &result);
+            napi_create_external_arraybuffer(env, req->digest_len, req->digest, NULL, free, &result);
             napi_resolve_deferred(env, req->deferred, result);
         } else {
             napi_value error;
@@ -91,9 +91,12 @@ napi_value HS256(napi_env env, napi_callback_info info) {
     }
 
     napi_value promise;
+    napi_value work_name;
     napi_create_promise(env, &(req->deferred), &promise);
 
-    napi_create_async_work(env, NULL, napi_create_string_utf8(env, "HMAC work", NAPI_AUTO_LENGTH, NULL), execute_hmac, complete_hmac, req, &(req->work));
+    napi_create_string_utf8(env, "HMAC work", NAPI_AUTO_LENGTH, &work_name);
+
+    napi_create_async_work(env, NULL, work_name, execute_hmac, complete_hmac, req, &(req->work));
     napi_queue_async_work(env, req->work);
 
     return promise;
