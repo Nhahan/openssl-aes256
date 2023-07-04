@@ -1,14 +1,13 @@
 {
-  "targets": [
-    {
-      "target_name": "binding",
-      "sources": [ "hs256.c" ],
-      "cflags": [ "-I/opt/homebrew/opt/openssl@3/include" ],
-      "ldflags": [ "-L/opt/homebrew/opt/openssl@3/lib" ],
-      "libraries": [ "-lcrypto", "-lssl" ],
-      "include_dirs": [ "<!(node -e \"require('node-addon-api').include\")" ],
-      "dependencies": [ "<!(node -e \"require('node-addon-api').gyp\")" ],
-      "defines": [ "NAPI_DISABLE_CPP_EXCEPTIONS" ]
-    }
-  ]
+    "targets": [
+        {
+            "target_name": "hs256",
+            "sources": ["hs256.c"],
+            "cflags": ["-I/opt/homebrew/opt/openssl@3/include"],
+            "ldflags": ["-L/opt/homebrew/opt/openssl@3/lib"],
+            "libraries": ["-lcrypto"],
+            "include_dirs": ["<!@(node -p \"require('node-addon-api').include\")"],
+            "dependencies": ["<!(node -p \"require('node-addon-api').gyp\")"]
+        }
+    ]
 }
