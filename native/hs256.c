@@ -26,7 +26,7 @@ void complete_hmac(napi_env env, napi_status status, void* data) {
     if (status == napi_ok) {
         if (req->status == 0) {
             napi_value result;
-            napi_create_external_arraybuffer(env, req->digest_len, req->digest, NULL, free, &result);
+            napi_create_external_arraybuffer(env, req->digest, req->digest_len, NULL, free, &result);
             napi_resolve_deferred(env, req->deferred, result);
         } else {
             napi_value error;
