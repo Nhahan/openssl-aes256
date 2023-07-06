@@ -5,6 +5,7 @@
 /dist
 /build
 /native/build
+/cmake-build-debug
 
 # Environment variables
 .env
