@@ -1,3 +1,8 @@
+/*
+ * This file serves as a reference material for implementing aes256 as a native addon.
+ * It is not directly used in the library and provided for informational purposes only.
+ */
+
 #include <stdio.h>
 #include <locale.h>
 #include <string.h>
