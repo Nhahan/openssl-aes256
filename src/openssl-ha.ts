@@ -1,5 +1,4 @@
-// hs256-aes256.ts
-const addon = require('./hs256-aes256.node');
+const addon = require('./openssl-ha.node');
 
 export function hmac(data: string, secret: string): string {
     return addon.hmac(data, secret);

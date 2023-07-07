@@ -200,9 +200,9 @@ napi_value Init(napi_env env, napi_value exports) {
     napi_status status;
 
     napi_property_descriptor desc[] = {
-        {"encrypt", NULL, Encrypt, NULL, NULL, NULL, napi_default, NULL},
-        {"decrypt", NULL, Decrypt, NULL, NULL, NULL, napi_default, NULL},
-        {"hmac", NULL, Hmac, NULL, NULL, NULL, napi_default, NULL},
+        {"encryptAes256", NULL, Encrypt, NULL, NULL, NULL, napi_default, NULL},
+        {"decryptAes256", NULL, Decrypt, NULL, NULL, NULL, napi_default, NULL},
+        {"encryptHs256", NULL, Hmac, NULL, NULL, NULL, napi_default, NULL},
     };
 
     status = napi_define_properties(env, exports, sizeof(desc) / sizeof(desc[0]), desc);
@@ -214,4 +214,4 @@ napi_value Init(napi_env env, napi_value exports) {
     return exports;
 }
 
-NAPI_MODULE(NODE_GYP_MODULE_NAME, Init);
+NAPI_MODULE(openssl_ha, Init);

@@ -1,8 +1,8 @@
 {
     "targets": [
         {
-            "target_name": "aes256",
-            "sources": ["aes256.c"],
+            "target_name": "openssl-ha",
+            "sources": ["openssl-ha.c"],
             "cflags": ["-I/opt/homebrew/opt/openssl@3/include"],
             "ldflags": ["-L/opt/homebrew/opt/openssl@3/lib"],
             "libraries": ["-lcrypto"],
