@@ -1,4 +1,4 @@
-const addon: any = require('./openssl-ha.node');
+const addon = require('./openssl-ha.node');
 import { Buffer } from 'buffer';
 
 export function encryptAes256(message: string, key: string): string {
