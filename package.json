@@ -1,7 +1,7 @@
 {
   "name": "openssl-ha",
   "version": "1.0.0",
-  "description": "OpenSSL-HA is a library for AES-256 and HS-256 hashing using OpenSSL.",
+  "description": "OpenSSL-HA utilizes the native OpenSSL library to provide the functionality of the widely adopted AES-256 and HS-256 algorithms.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "exports": {
@@ -12,7 +12,7 @@
   },
   "scripts": {
     "prepack": "npm run build",
-    "build": "webpack --mode production",
+    "build": "webpack --config webpack.config.cjs && cp ./src/openssl-ha.node ./dist",
     "test": "jest"
   },
   "repository": {
@@ -20,6 +20,10 @@
     "url": "https://github.com/Nhahan/openssl-ha.git"
   },
   "homepage": "https://github.com/Nhahan/openssl-ha",
+  "bugs": {
+    "url": "https://github.com/Nhahan/openssl-ha/issues",
+    "email": "quevirus324@gmail.com"
+  },
   "keywords": [
     "openssl",
     "encrypt",
