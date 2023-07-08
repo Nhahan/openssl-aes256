@@ -3,20 +3,20 @@ const path = require('path');
 module.exports = {
     mode: 'production',
     entry: {
-        index: './src/index.ts',
+        index: './src/openssl-ha.ts',
     },
     output: {
         path: path.resolve(__dirname, 'dist'),
-        filename: '[name].js',
+        filename: 'index.js',
         clean: true,
         library: {
-            name: 'FileDispatcher',
+            name: 'openssl-ha',
             type: 'umd',
         },
         globalObject: 'this',
     },
     resolve: {
-        extensions: ['.ts', '.js', '.node']
+        extensions: ['.ts', '.js', '.node'],
     },
     module: {
         rules: [
