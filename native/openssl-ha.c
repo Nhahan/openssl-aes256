@@ -33,6 +33,7 @@ void aes256_cbc_encrypt(const U8 *message, const U8 *key, const U8 *iv, U8 *ciph
     *ciphertext_len = len;
     EVP_EncryptFinal_ex(ctx, ciphertext + len, &len);
     *ciphertext_len += len;
+    EVP_CIPHER_CTX_cleanup(ctx);
     EVP_CIPHER_CTX_free(ctx);
 }
 
@@ -47,10 +48,12 @@ void aes256_cbc_decrypt(const U8 *ciphertext, const U8 *key, const U8 *iv, U8 *m
     decrypted_len += len;
     EVP_DecryptFinal_ex(ctx, message + decrypted_len, &len);
     decrypted_len += len;
+    EVP_CIPHER_CTX_cleanup(ctx);
     EVP_CIPHER_CTX_free(ctx);
 
     message[decrypted_len] = '\0';
 }
+
 
 napi_value Encrypt(napi_env env, napi_callback_info info) {
     napi_status status;
