@@ -1,42 +1,39 @@
-const addon = require('./openssl-ha.node');
+const addon: any = require('./openssl-ha.node');
+import { Buffer } from 'buffer';
 
 export function encryptAes256(message: string, key: string): string {
-    if (!message) throw new Error('Missing message');
-    if (!key) throw new Error('Missing key');
+    validateInput(message, 'Invalid message');
+    validateInput(key, 'Invalid key');
 
-    const MAX_MESSAGE_LENGTH = 1024;
-    const MAX_KEY_LENGTH = 32;
-
-    const truncatedMessage = message.slice(0, MAX_MESSAGE_LENGTH);
-    const truncatedKey = key.slice(0, MAX_KEY_LENGTH);
-
-    const encryptedBuffer = addon.encryptAes256(truncatedMessage, truncatedKey);
-    return encryptedBuffer.toString('base64');
+    const ciphertext = addon.encryptAes256(message, key);
+    return encodeBase64(ciphertext);
 }
 
 export function decryptAes256(ciphertext: string, key: string): string {
-    if (!ciphertext) throw new Error('Missing ciphertext');
-    if (!key) throw new Error('Missing key');
+    validateInput(ciphertext, 'Invalid ciphertext');
+    validateInput(key, 'Invalid key');
 
-    const MAX_CIPHERTEXT_LENGTH = 1024;
-    const MAX_KEY_LENGTH = 32;
-
-    const ciphertextBuffer = Buffer.from(ciphertext, 'base64');
-    const truncatedKey = key.slice(0, MAX_KEY_LENGTH);
-
-    const decryptedBuffer = addon.decryptAes256(ciphertextBuffer.slice(0, MAX_CIPHERTEXT_LENGTH), truncatedKey);
-    return decryptedBuffer.toString('utf8');
+    const decodedCiphertext = decodeBase64(ciphertext);
+    return addon.decryptAes256(decodedCiphertext, key);
 }
 
-export function encryptHs256(data: string, secret: string): string {
-    if (!data) throw new Error('Missing data');
-    if (!secret) throw new Error('Missing secret');
+export function encryptHs256(message: string, key: string): string {
+    validateInput(message, 'Invalid message');
+    validateInput(key, 'Invalid key');
 
-    const MAX_DATA_LENGTH = 1024;
-    const MAX_SECRET_LENGTH = 1024;
+    return addon.encryptHs256(message, key);
+}
 
-    const truncatedData = data.slice(0, MAX_DATA_LENGTH);
-    const truncatedSecret = secret.slice(0, MAX_SECRET_LENGTH);
+function validateInput(input: any, errorMessage: string): void {
+    if (!input) {
+        throw new Error(errorMessage);
+    }
+}
 
-    return addon.encryptHs256(truncatedData, truncatedSecret);
+function encodeBase64(data: Buffer): string {
+    return Buffer.from(data).toString('base64');
+}
+
+function decodeBase64(data: string): Buffer {
+    return Buffer.from(data, 'base64');
 }
