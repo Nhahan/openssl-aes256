@@ -103,6 +103,12 @@ napi_value Encrypt(napi_env env, napi_callback_info info) {
         return NULL;
     }
 
+    if (message_length >= MAX_BUFFER_SIZE) {
+        napi_throw_error(env, NULL, "Message size exceeds buffer capacity.");
+        EVP_CIPHER_CTX_free(ctx);
+        return NULL;
+    }
+
     size_t ciphertext_size = message_length + EVP_CIPHER_CTX_block_size(ctx);
     U8 *ciphertext = (U8 *)malloc(ciphertext_size);
     if (ciphertext == NULL) {
