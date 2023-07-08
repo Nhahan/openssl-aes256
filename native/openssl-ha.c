@@ -54,7 +54,6 @@ void aes256_cbc_decrypt(const U8 *ciphertext, const U8 *key, const U8 *iv, U8 *m
     message[decrypted_len] = '\0';
 }
 
-
 napi_value Encrypt(napi_env env, napi_callback_info info) {
     napi_status status;
 
@@ -62,7 +61,7 @@ napi_value Encrypt(napi_env env, napi_callback_info info) {
     napi_value argv[2];
     status = napi_get_cb_info(env, info, &argc, argv, NULL, NULL);
     if (status != napi_ok || argc < 2) {
-        napi_throw_error(env, NULL, "Invalid arguments");
+        napi_throw_error(env, NULL, "Invalid arguments.");
         return NULL;
     }
 
@@ -70,7 +69,7 @@ napi_value Encrypt(napi_env env, napi_callback_info info) {
     size_t message_length = 0;
     status = napi_get_value_string_utf8(env, argv[0], message, sizeof(message), &message_length);
     if (status != napi_ok) {
-        napi_throw_error(env, NULL, "Invalid message");
+        napi_throw_error(env, NULL, "Invalid message.");
         return NULL;
     }
 
@@ -78,7 +77,7 @@ napi_value Encrypt(napi_env env, napi_callback_info info) {
     size_t key_length = 0;
     status = napi_get_value_string_utf8(env, argv[1], key, sizeof(key), &key_length);
     if (status != napi_ok) {
-        napi_throw_error(env, NULL, "Invalid key");
+        napi_throw_error(env, NULL, "Invalid key.");
         return NULL;
     }
 
@@ -88,21 +87,58 @@ napi_value Encrypt(napi_env env, napi_callback_info info) {
     U8 iv[BLOCK_SIZE];
     adjust_iv_from_key(adjusted_key, iv);
 
-    if (message_length > sizeof(message) - 1) {
-        message_length = sizeof(message) - 1;
-        message[message_length] = '\0';
+    EVP_CIPHER_CTX *ctx;
+    int ciphertext_len = 0;
+    int len;
+
+    ctx = EVP_CIPHER_CTX_new();
+    if (ctx == NULL) {
+        napi_throw_error(env, NULL, "Failed to create encryption context.");
+        return NULL;
     }
 
-    U8 ciphertext[MAX_BUFFER_SIZE];
-    int ciphertext_len = 0;
-    aes256_cbc_encrypt((U8 *)message, adjusted_key, iv, ciphertext, message_length, &ciphertext_len);
+    if (!EVP_EncryptInit_ex(ctx, EVP_aes_256_cbc(), NULL, adjusted_key, iv)) {
+        napi_throw_error(env, NULL, "Failed to initialize encryption.");
+        EVP_CIPHER_CTX_free(ctx);
+        return NULL;
+    }
+
+    size_t ciphertext_size = message_length + EVP_CIPHER_CTX_block_size(ctx);
+    U8 *ciphertext = (U8 *)malloc(ciphertext_size);
+    if (ciphertext == NULL) {
+        napi_throw_error(env, NULL, "Memory allocation failed.");
+        EVP_CIPHER_CTX_free(ctx);
+        return NULL;
+    }
+
+    if (!EVP_EncryptUpdate(ctx, ciphertext, &len, (U8 *)message, (int)message_length)) {
+        napi_throw_error(env, NULL, "Error occurred during encryption.");
+        free(ciphertext);
+        EVP_CIPHER_CTX_free(ctx);
+        return NULL;
+    }
+    ciphertext_len = len;
+
+    if (!EVP_EncryptFinal_ex(ctx, ciphertext + len, &len)) {
+        napi_throw_error(env, NULL, "Error occurred during encryption finalization.");
+        free(ciphertext);
+        EVP_CIPHER_CTX_free(ctx);
+        return NULL;
+    }
+    ciphertext_len += len;
+
+    EVP_CIPHER_CTX_cleanup(ctx);
+    EVP_CIPHER_CTX_free(ctx);
 
     napi_value result;
     status = napi_create_buffer_copy(env, ciphertext_len, ciphertext, NULL, &result);
     if (status != napi_ok) {
-        napi_throw_error(env, NULL, "Failed to create result buffer");
+        napi_throw_error(env, NULL, "Failed to create result buffer.");
+        free(ciphertext);
         return NULL;
     }
+
+    free(ciphertext);
 
     return result;
 }
