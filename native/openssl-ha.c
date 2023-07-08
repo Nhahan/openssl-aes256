@@ -7,6 +7,7 @@
 
 typedef unsigned char U8;
 
+#define MAX_BUFFER_SIZE 1024
 #define BLOCK_SIZE 16
 #define KEY_SIZE 32
 
@@ -62,7 +63,7 @@ napi_value Encrypt(napi_env env, napi_callback_info info) {
         return NULL;
     }
 
-    char message[1024];
+    char message[MAX_BUFFER_SIZE];
     size_t message_length = 0;
     status = napi_get_value_string_utf8(env, argv[0], message, sizeof(message), &message_length);
     if (status != napi_ok) {
@@ -84,7 +85,12 @@ napi_value Encrypt(napi_env env, napi_callback_info info) {
     U8 iv[BLOCK_SIZE];
     adjust_iv_from_key(adjusted_key, iv);
 
-    U8 ciphertext[1024];
+    if (message_length > sizeof(message) - 1) {
+        message_length = sizeof(message) - 1;
+        message[message_length] = '\0';
+    }
+
+    U8 ciphertext[MAX_BUFFER_SIZE];
     int ciphertext_len = 0;
     aes256_cbc_encrypt((U8 *)message, adjusted_key, iv, ciphertext, message_length, &ciphertext_len);
 
@@ -136,7 +142,7 @@ napi_value Decrypt(napi_env env, napi_callback_info info) {
     U8 iv[BLOCK_SIZE];
     adjust_iv_from_key(adjusted_key, iv);
 
-    U8 decrypted[1024];
+    U8 decrypted[MAX_BUFFER_SIZE];
     aes256_cbc_decrypt(ciphertext, adjusted_key, iv, decrypted, sizeof(decrypted), ciphertext_length);
 
     napi_value result;
