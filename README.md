@@ -33,8 +33,6 @@ const hash = encryptHs256(message, key);
 console.log('HS-256 Hash:', hash);
 ```
 
-OpenSSL-HA supports both module import styles: CommonJS (using require) and ECMAScript modules (using import). You can choose the import style that suits your project or personal preference.
-
 ## API
 
 `encryptAes256(message: string, key: string): string`
