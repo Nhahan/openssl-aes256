@@ -1,18 +1,12 @@
 {
   "name": "openssl-ha",
-  "version": "0.0.1-pre",
+  "version": "1.0.0",
   "description": "OpenSSL-HA utilizes the native OpenSSL library to provide the functionality of the widely adopted AES-256 and HS-256 algorithms.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "exports": {
-    ".": {
-      "import": "./dist/index.js",
-      "require": "./dist/index.js"
-    }
-  },
   "scripts": {
     "prepack": "npm run build",
-    "build": "mkdir dist; cp ./src/openssl-ha.node ./dist && cp ./src/openssl-ha.ts ./dist/index.ts",
+    "build": "sh ./publish.sh",
     "test": "jest"
   },
   "repository": {
@@ -40,12 +34,9 @@
   "author": "Nhahan",
   "license": "MIT",
   "devDependencies": {
-    "@babel/core": "^7.15.5",
-    "@babel/preset-env": "^7.15.6",
-    "@babel/preset-typescript": "^7.15.0",
     "@types/jest": "^27.0.3",
     "@types/node": "^16.7.13",
-    "babel-loader": "^8.2.2",
+    "@types/webpack": "^5.28.1",
     "ignore-loader": "^0.1.2",
     "jest": "^27.2.5",
     "ts-jest": "^27.1.3",
