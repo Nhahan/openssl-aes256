@@ -1,6 +1,6 @@
 {
   "name": "openssl-ha",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "OpenSSL-HA utilizes the native OpenSSL library to provide the functionality of the widely adopted AES-256 and HS-256 algorithms.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
