@@ -2,9 +2,6 @@
   "scripts": {
     "test": "jest"
   },
-  "dependencies": {
-    "node-addon-api": "^7.0.0"
-  },
   "devDependencies": {
     "@types/jest": "^29.5.2",
     "buffer": "^6.0.3",
