@@ -22,7 +22,7 @@ module.exports = {
         rules: [
             {
                 test: /\.ts$/,
-                use: ['babel-loader', 'ts-loader'],
+                use: ['ts-loader'],
                 exclude: /node_modules/,
             },
             {
@@ -30,6 +30,9 @@ module.exports = {
                 use: 'ignore-loader',
             },
         ],
+    },
+    externals: {
+        './openssl-ha.node': 'commonjs ./openssl-ha.node',
     },
     target: 'node',
 };
