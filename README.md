@@ -1,6 +1,6 @@
 # OpenSSL-HA
 
-OpenSSL-HA provides AES-256 and HS-256 hashing functionality using OpenSSL, utilizing the trusted OpenSSL method. It supports the widely adopted AES-256 and HS-256 algorithms
+OpenSSL-HA utilizes the native OpenSSL library to provide the functionality of the widely adopted AES-256 and HS-256 algorithms.
 
 ## Features
 
