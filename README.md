@@ -1,6 +1,6 @@
 # OpenSSL-HA
 
-OpenSSL-HA utilizes the native OpenSSL library to provide the functionality of the widely adopted AES-256 and HS-256 algorithms.
+OpenSSL-HA is based off of the native OpenSSL library and will provide functionality of the widely adopted AES-256 and HS-256 algorithms.
 
 ## Features
 
@@ -35,14 +35,14 @@ console.log('HS-256 Hash:', hash);
 
 ## API
 
-`encryptAes256(message: string, key: string): string`  
-Encrypts a message using the AES-256 algorithm with the provided key and returns the encrypted ciphertext.
+- `encryptAes256(message: string, key: string): string`  
+    - Encrypts a message using the AES-256 algorithm with the provided key and returns the encrypted ciphertext.
 
-`decryptAes256(ciphertext: string, key: string): string`  
-Decrypts a ciphertext using the AES-256 algorithm with the provided key and returns the original message.
+- `decryptAes256(ciphertext: string, key: string): string`  
+    - Decrypts a ciphertext using the AES-256 algorithm with the provided key and returns the original message.
 
-`encryptHs256(message: string, key: string): string`  
-Generates an HS-256 hash of the message using the provided key and returns the hash value.
+- `encryptHs256(message: string, key: string): string`  
+    - Generates an HS-256 hash of the message using the provided key and returns the hash value.
 
 ## License
 
