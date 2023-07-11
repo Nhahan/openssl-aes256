@@ -1,7 +1,7 @@
 {
   "name": "openssl-ha",
-  "version": "1.0.1",
-  "description": "OpenSSL-HA utilizes the native OpenSSL library to provide the functionality of the widely adopted AES-256 and HS-256 algorithms.",
+  "version": "1.0.12",
+  "description": "OpenSSL-HA is based off of the native OpenSSL library and will provide functionality of the widely adopted AES-256 and HS-256 algorithms.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
@@ -14,10 +14,6 @@
     "url": "https://github.com/Nhahan/openssl-ha.git"
   },
   "homepage": "https://github.com/Nhahan/openssl-ha",
-  "bugs": {
-    "url": "https://github.com/Nhahan/openssl-ha/issues",
-    "email": "quevirus324@gmail.com"
-  },
   "keywords": [
     "openssl",
     "encrypt",
@@ -29,7 +25,9 @@
     "security",
     "aes256",
     "hs256",
-    "openssl-js"
+    "hmac",
+    "openssl-js",
+    "crypto"
   ],
   "author": "Nhahan",
   "license": "MIT",
