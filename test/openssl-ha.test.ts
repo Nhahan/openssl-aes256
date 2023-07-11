@@ -1,4 +1,4 @@
-import { encryptAes256, decryptAes256, encryptHs256 } from 'openssl-ha';
+import { encryptAes256, decryptAes256, encryptHs256 } from '../src/openssl-ha';
 
 describe('OpenSSL-HA', () => {
     const validMessage = 'Hello, World!';
