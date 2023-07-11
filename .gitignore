@@ -5,6 +5,7 @@
 /dist
 /build
 /native/build
+/native/node_modules
 /cmake-build-debug
 
 # Environment variables
