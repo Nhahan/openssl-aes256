@@ -30,7 +30,7 @@ console.log('Decrypted Message:', decryptedMessage);
 
 // Generate an HS-256 hash
 const hash = encryptHs256(message, key);
-console.log('HS-256 Hash:', hash);
+console.log('Hash:', hash);
 ```
 
 ## API
