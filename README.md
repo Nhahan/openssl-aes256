@@ -33,6 +33,8 @@ const hash = encryptHs256(message, key);
 console.log('Hash:', hash);
 ```
 
+- *Note: Versions lower than 3.0.0 are not recommended*
+
 ## API
 
 - `encryptAes256(message: string, key: string): string`  
