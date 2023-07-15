@@ -1,11 +1,10 @@
 {
   "name": "openssl-ha",
-  "version": "1.0.12",
+  "version": "1.0.13",
   "description": "OpenSSL-HA is based off of the native OpenSSL library and will provide functionality of the widely adopted AES-256 and HS-256 algorithms.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "prepack": "npm run build",
     "build": "sh ./publish.sh",
     "test": "jest"
   },
